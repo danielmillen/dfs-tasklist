@@ -1,0 +1,25 @@
+{
+  "name": "dfs-tasklist",
+  "version": "1.0.0",
+  "description": "Task-list API implementation coding exercise for DFS",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielmillen/dfs-tasklist.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielmillen/dfs-tasklist/issues"
+  },
+  "homepage": "https://github.com/danielmillen/dfs-tasklist#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.2.9",
+    "nosql": "^6.1.0"
+  }
+}
