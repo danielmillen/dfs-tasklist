@@ -18,4 +18,21 @@ module.exports = app => {
 
     res.send(lists);
   });
+
+  app.get('/list/:listId', async (req, res) => {
+    try {
+      // Throws if listId isn't in the proper format for an id
+      const list = await TaskList.findById(req.params.listId);
+
+      if (!list) {
+        res.status(404);
+        res.send('List not found');
+      }
+
+      res.send(list);
+    } catch (ex) {
+      res.status(400);
+      res.send('Invalid id supplied');
+    }
+  });
 };
