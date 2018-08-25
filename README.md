@@ -6,10 +6,6 @@ Task-list API implementation coding exercise for DFS
 
 Spec is defined [here](https://app.swaggerhub.com/apis/aweiker/ToDo/1.0.0)
 
-# additional assumptions
-
-- The \* character in the spec indicates a required field
-
 # deviations
 
 The spec has been deviated from in the following ways:
