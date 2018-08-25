@@ -70,4 +70,33 @@ module.exports = app => {
       res.send('Invalid id supplied');
     }
   });
+
+  app.post('/list/:listId/tasks', async (req, res) => {
+    const { name, completed } = req.body;
+
+    console.log(name);
+    if (!name) {
+      res.status(400);
+      res.send('invalid input, object invalid');
+      return;
+    }
+
+    const task = new Task({
+      name,
+      completed: completed || false
+    });
+
+    const result = await TaskList.updateOne(
+      { _id: req.params.listId },
+      { $push: { tasks: task.toObject() } }
+    );
+
+    if (result.nModified < 1) {
+      res.status(404);
+      res.send('item not found');
+    } else {
+      res.status(201);
+      res.send('item created');
+    }
+  });
 };
