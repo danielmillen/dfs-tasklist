@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const TaskList = mongoose.model('lists');
-const Task = mongoose.model('tasks');
 
 module.exports = app => {
   app.get('/lists', async (req, res) => {
@@ -74,21 +73,20 @@ module.exports = app => {
   app.post('/list/:listId/tasks', async (req, res) => {
     const { name, completed } = req.body;
 
-    console.log(name);
     if (!name) {
       res.status(400);
       res.send('invalid input, object invalid');
       return;
     }
 
-    const task = new Task({
+    const task = {
       name,
       completed: completed || false
-    });
+    };
 
     const result = await TaskList.updateOne(
       { _id: req.params.listId },
-      { $push: { tasks: task.toObject() } }
+      { $push: { tasks: task } }
     );
 
     if (result.nModified < 1) {
@@ -97,6 +95,32 @@ module.exports = app => {
     } else {
       res.status(201);
       res.send('item created');
+    }
+  });
+
+  app.post('/list/:listId/tasks/:taskId/completed', async (req, res) => {
+    if (req.body.completed === undefined || req.body.completed === null) {
+      res.status(400);
+      res.send('invalid input, object invalid');
+      return;
+    }
+
+    const result = await TaskList.updateOne(
+      {
+        _id: req.params.listId,
+        tasks: { $elemMatch: { _id: req.params.taskId } }
+      },
+      { $set: { 'tasks.$.completed': req.body.completed } }
+    );
+
+    console.log(result);
+
+    if (result.n < 1) {
+      res.status(404);
+      res.send('item not found');
+    } else {
+      res.status(201);
+      res.send('item updated');
     }
   });
 };

@@ -6,4 +6,4 @@ const taskSchema = new Schema({
   completed: Boolean
 });
 
-mongoose.model('tasks', taskSchema);
+module.exports = taskSchema;

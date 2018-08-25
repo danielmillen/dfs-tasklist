@@ -21,3 +21,4 @@ The spec has been deviated from in the following ways:
 - Removed the ID field from the POST methods
   - MongoDb & mongoose generate ID's for objects that are inserted
   - From a user's perspective, this is an implementation detail that will likely be error prone given the need for unique ID's.
+- Added 404's when task lists/tasks weren't found in the /list/\<id\>/tasks and /list/\<id\>/tasks/\<taskId\>/completed methods
