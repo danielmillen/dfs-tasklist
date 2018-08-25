@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const app = express();
 require('./Models/TaskList');
 
@@ -9,6 +10,8 @@ mongoose.connect(
   'mongodb://dbUser:reallySecure1@ds229312.mlab.com:29312/dfs-tasklist',
   { useNewUrlParser: true }
 );
+
+app.use(bodyParser.json());
 
 // A possible improvement would be to include some sort of login verification however that would significantly
 // complicate things for the reviewer, and wasn't part of the spec. The specific use-case may not require it

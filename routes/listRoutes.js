@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const TaskList = mongoose.model('lists');
+const Task = mongoose.model('tasks');
 
 module.exports = app => {
   app.get('/lists', async (req, res) => {
@@ -17,6 +18,40 @@ module.exports = app => {
       .skip(parseInt(req.query.skip));
 
     res.send(lists);
+  });
+
+  app.post('/lists', async (req, res) => {
+    const { name, description } = req.body;
+
+    if (!name) {
+      res.status(400);
+      res.send('invalid input, object invalid');
+      return;
+    }
+
+    const list = new TaskList({
+      name
+    });
+
+    if (description) {
+      list.description = description;
+    }
+
+    if (req.body.tasks) {
+      const tasks = req.body.tasks.map(task => {
+        return new Task({
+          name: task.name,
+          completed: task.completed || false
+        });
+      });
+
+      list.tasks = tasks;
+    }
+
+    await list.save();
+
+    res.status(201);
+    res.send('item created');
   });
 
   app.get('/list/:listId', async (req, res) => {
