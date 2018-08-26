@@ -113,8 +113,6 @@ module.exports = app => {
       { $set: { 'tasks.$.completed': req.body.completed } }
     );
 
-    console.log(result);
-
     if (result.n < 1) {
       res.status(404);
       res.send('item not found');
